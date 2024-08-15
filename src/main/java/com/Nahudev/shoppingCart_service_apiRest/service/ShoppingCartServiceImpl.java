@@ -2,6 +2,7 @@ package com.Nahudev.shoppingCart_service_apiRest.service;
 
 import com.Nahudev.shoppingCart_service_apiRest.dto.ProductClientDTO;
 import com.Nahudev.shoppingCart_service_apiRest.dto.ShoppingCartDTO;
+import com.Nahudev.shoppingCart_service_apiRest.dto.ShoppingCartFromUserDTO;
 import com.Nahudev.shoppingCart_service_apiRest.dto.UserClientDTO;
 import com.Nahudev.shoppingCart_service_apiRest.exceptions.ResourceNotFoundException;
 import com.Nahudev.shoppingCart_service_apiRest.model.ShoppingCartEntity;
@@ -11,6 +12,9 @@ import com.Nahudev.shoppingCart_service_apiRest.repository.IUserClientRepository
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingCartServiceImpl implements IShoppingCartService{
@@ -57,6 +61,19 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
 
         return mapOutShoppingCartDTO(shoppingCartFound);
     }
+
+    @Override
+    public ShoppingCartFromUserDTO getAllProductsFromShoppingCart(Long userId) {
+
+        List<ShoppingCartEntity> shoppingCartEntities = shoppingCartRepository.getShoppingCartFromUser(userId);
+        List<ShoppingCartDTO> productsFromShoppingCart = shoppingCartEntities.stream().map(this::mapOutShoppingCartDTO).collect(Collectors.toList());
+
+        ShoppingCartFromUserDTO shoppingCartFromUserDTO = new ShoppingCartFromUserDTO();
+        shoppingCartFromUserDTO.setAddedProducts(productsFromShoppingCart);
+
+        return shoppingCartFromUserDTO;
+    }
+
 
     public ShoppingCartDTO mapOutShoppingCartDTO(ShoppingCartEntity shoppingCartEntity) {
         return modelMapper.map(shoppingCartEntity, ShoppingCartDTO.class);

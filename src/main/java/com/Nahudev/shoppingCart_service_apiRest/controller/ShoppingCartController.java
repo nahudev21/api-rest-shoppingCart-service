@@ -1,6 +1,7 @@
 package com.Nahudev.shoppingCart_service_apiRest.controller;
 
 import com.Nahudev.shoppingCart_service_apiRest.dto.ShoppingCartDTO;
+import com.Nahudev.shoppingCart_service_apiRest.dto.ShoppingCartFromUserDTO;
 import com.Nahudev.shoppingCart_service_apiRest.repository.IProductClientRepository;
 import com.Nahudev.shoppingCart_service_apiRest.repository.IUserClientRepository;
 import com.Nahudev.shoppingCart_service_apiRest.service.IShoppingCartService;
@@ -29,5 +30,11 @@ public class ShoppingCartController {
         return new ResponseEntity<>(shoppingCartService.getProductFromShoppingCart(id), HttpStatus.OK);
     }
 
+    @GetMapping("/user")
+    public ResponseEntity<ShoppingCartFromUserDTO> getAllProductsFromShoppingCart(
+            @RequestParam(value = "userId", required = true) Long userId) {
+
+        return new ResponseEntity<>(shoppingCartService.getAllProductsFromShoppingCart(userId), HttpStatus.OK);
+    }
 
 }
