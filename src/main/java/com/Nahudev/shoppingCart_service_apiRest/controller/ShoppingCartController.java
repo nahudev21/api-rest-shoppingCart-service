@@ -24,5 +24,10 @@ public class ShoppingCartController {
         return new ResponseEntity<>(shoppingCartService.createShoppingCart(userId, productId, amount), HttpStatus.CREATED);
     }
 
+    @GetMapping("/getProduct/{id}")
+    public ResponseEntity<ShoppingCartDTO> getProductFromShoppingCart(@PathVariable(name = "id") Long id) {
+        return new ResponseEntity<>(shoppingCartService.getProductFromShoppingCart(id), HttpStatus.OK);
+    }
+
 
 }

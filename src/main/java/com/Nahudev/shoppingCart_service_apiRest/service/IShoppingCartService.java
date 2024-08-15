@@ -6,4 +6,6 @@ public interface IShoppingCartService {
 
     public ShoppingCartDTO createShoppingCart(Long userId, Long productId, int amount);
 
+    public ShoppingCartDTO getProductFromShoppingCart(Long id);
+
 }

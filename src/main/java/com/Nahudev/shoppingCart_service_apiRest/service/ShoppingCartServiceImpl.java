@@ -3,6 +3,7 @@ package com.Nahudev.shoppingCart_service_apiRest.service;
 import com.Nahudev.shoppingCart_service_apiRest.dto.ProductClientDTO;
 import com.Nahudev.shoppingCart_service_apiRest.dto.ShoppingCartDTO;
 import com.Nahudev.shoppingCart_service_apiRest.dto.UserClientDTO;
+import com.Nahudev.shoppingCart_service_apiRest.exceptions.ResourceNotFoundException;
 import com.Nahudev.shoppingCart_service_apiRest.model.ShoppingCartEntity;
 import com.Nahudev.shoppingCart_service_apiRest.repository.IProductClientRepository;
 import com.Nahudev.shoppingCart_service_apiRest.repository.IShoppingCartRepository;
@@ -45,6 +46,16 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
         productClient.reduceStock(productId, totalAmount);
 
         return mapOutShoppingCartDTO(shoppingCartEntity);
+    }
+
+    @Override
+    public ShoppingCartDTO getProductFromShoppingCart(Long id) {
+
+        ShoppingCartEntity shoppingCartFound = shoppingCartRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Producto", "id", id));
+
+
+        return mapOutShoppingCartDTO(shoppingCartFound);
     }
 
     public ShoppingCartDTO mapOutShoppingCartDTO(ShoppingCartEntity shoppingCartEntity) {
