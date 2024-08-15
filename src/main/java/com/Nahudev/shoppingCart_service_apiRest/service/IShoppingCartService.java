@@ -13,4 +13,6 @@ public interface IShoppingCartService {
 
     public ShoppingCartFromUserDTO getAllProductsFromShoppingCart(Long userId);
 
+    public void deleteProductFromShoppingCart(Long id);
+
 }

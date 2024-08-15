@@ -74,6 +74,15 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
         return shoppingCartFromUserDTO;
     }
 
+    @Override
+    public void deleteProductFromShoppingCart(Long id) {
+
+        ShoppingCartEntity shoppingCartFound = shoppingCartRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Producto", "id", id));
+
+        shoppingCartRepository.delete(shoppingCartFound);
+    }
+
 
     public ShoppingCartDTO mapOutShoppingCartDTO(ShoppingCartEntity shoppingCartEntity) {
         return modelMapper.map(shoppingCartEntity, ShoppingCartDTO.class);
