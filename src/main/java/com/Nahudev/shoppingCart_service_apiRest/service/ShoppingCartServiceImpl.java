@@ -9,6 +9,7 @@ import com.Nahudev.shoppingCart_service_apiRest.model.ShoppingCartEntity;
 import com.Nahudev.shoppingCart_service_apiRest.repository.IProductClientRepository;
 import com.Nahudev.shoppingCart_service_apiRest.repository.IShoppingCartRepository;
 import com.Nahudev.shoppingCart_service_apiRest.repository.IUserClientRepository;
+import jakarta.persistence.Id;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,6 +84,12 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
         shoppingCartRepository.delete(shoppingCartFound);
     }
 
+    @Override
+    public void deleteShoppingCart(Long userId) {
+
+        List<ShoppingCartEntity> shoppingCartEntities = shoppingCartRepository.getShoppingCartFromUser(userId);
+        shoppingCartRepository.deleteAll(shoppingCartEntities);
+    }
 
     public ShoppingCartDTO mapOutShoppingCartDTO(ShoppingCartEntity shoppingCartEntity) {
         return modelMapper.map(shoppingCartEntity, ShoppingCartDTO.class);

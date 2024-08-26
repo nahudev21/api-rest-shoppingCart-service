@@ -44,4 +44,11 @@ public class ShoppingCartController {
         return new ResponseEntity<>("Producto eliminado correctamente!", HttpStatus.OK);
     }
 
+    @DeleteMapping("/deleteShoppingCart/{userId}")
+    public ResponseEntity<String> deleteShoppingCart(@PathVariable(name = "userId") Long userId) {
+
+       shoppingCartService.deleteShoppingCart(userId);
+       return new ResponseEntity<>("Carrito eliminado correctamente!", HttpStatus.OK);
+    }
+
 }
